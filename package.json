@@ -1,0 +1,21 @@
+{
+  "name": "llvm3",
+  "version": "0.0.1",
+  "description": "LLVM 3.6 bindings",
+  "main": "index.coffee",
+  "scripts": {
+    "generate-bindings" : "ffi-generate -l libLLVM-3.6 -m library -f /usr/include/llvm-c/Core.h -p LLVM | js2coffee > ./lib/bindings.coffee"
+  },
+  "keywords": [
+    "llvm"
+  ],
+  "author": "Fredrik Andersson",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "ffi": "^2.0.0",
+    "lodash": "^3.10.1",
+    "ref": "^1.1.1",
+    "ref-array": "^1.1.2",
+    "ref-struct": "^1.0.2"
+  }
+}
