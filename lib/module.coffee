@@ -1,23 +1,25 @@
+# Module
 lib = require("./bindings")
 func = require("./function")
 
 module.exports = (name) ->
   do (name) ->
     state =
+      ptr : lib.func.LLVMModuleCreateWithName(name)
       name : name
-      ptr : lib.LLVMModuleCreateWithName(name)
 
     wrapper =
+      ptr : () -> state.ptr
       dump : () ->
-        lib.LLVMDumpModule(state.ptr)
+        lib.func.LLVMDumpModule(state.ptr)
         wrapper
 
       writeBitcodeToFile : (path) ->
-        lib.LLVMWriteBitcodeToFile(this.ptr, path)
+        lib.func.LLVMWriteBitcodeToFile(state.ptr, path)
         wrapper
 
-      addFunction : (name, type, cb) ->
-        cb(func(state.ptr, name, type))
+      addFunction : (name, returnType, argumentTypes, cb) ->
+        cb(func(wrapper, name, returnType, argumentTypes))
         wrapper
 
     wrapper
