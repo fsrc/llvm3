@@ -1,13 +1,13 @@
 _         = require('lodash')
 FFI       = require('ffi')
 ref       = require('ref')
-ptr       = ref.refType(ref.types.void)
-refArray  = require('ref-array')(ptr)
+refArray  = require('ref-array')
 
-exports.arrayToRefArray = (arr) ->
+arrayToRefArray = (type, arr) ->
   _.reduce(arr, (ref, itm, index) ->
     ref[index] = itm
-  , new refArray(arr.length))
+    ref
+  , new type(arr.length))
 
 exports.voidPtr = voidPtr = ref.refType(ref.types.void)
 
@@ -26,7 +26,8 @@ exports.LLVMDiagnosticInfoRefPtr = ref.refType(exports.LLVMDiagnosticInfoRef)
 exports.LLVMModuleRef            = voidPtr
 exports.LLVMModuleRefPtr         = ref.refType(exports.LLVMModuleRef)
 exports.LLVMTypeRef              = voidPtr
-exports.LLVMTypeRefPtr           = ref.refType(exports.LLVMTypeRef)
+exports.LLVMTypeRefPtr           = refArray(exports.LLVMTypeRef)
+exports.LLVMTypeRefArray         = _.partial(arrayToRefArray, exports.LLVMTypeRefPtr)
 exports.LLVMValueRef             = voidPtr
 exports.LLVMValueRefPtr          = ref.refType(exports.LLVMValueRef)
 exports.LLVMUseRef               = voidPtr

@@ -10,6 +10,8 @@ module.exports = (name) ->
 
     wrapper =
       ptr : () -> state.ptr
+      validate : () ->
+        wrapper
       dump : () ->
         lib.func.LLVMDumpModule(state.ptr)
         wrapper

@@ -4,7 +4,7 @@ types = require("./types")
 block = require("./block")
 
 module.exports = (module, name, returnType, argumentTypes) ->
-  do (name) ->
+  do (module, name, returnType, argumentTypes) ->
     type = types.fun(returnType, argumentTypes)
     state =
       module : module
